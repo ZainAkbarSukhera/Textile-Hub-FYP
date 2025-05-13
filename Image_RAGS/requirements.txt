@@ -1,0 +1,8 @@
+yaml
+python-box
+torch 
+pillow
+numpy
+chromadb
+flask
+transformers

@@ -1,0 +1,98 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Image Result</title>
+</head>
+<body>
+    <h1>Comparison Result</h1>
+    <p>Label: {{ label }}</p>
+    <div>
+        <img src="{{ url_for('serve_image', filename=image_path) }}" alt="Closest Image">
+    </div>
+    {% if image_path %}
+        <!-- <img src="{{ url_for('static', filename=image_path) }}" alt="Closest Image"> -->
+     
+
+    {% else %}
+        <!-- <p>No closest image found.</p> -->
+    {% endif %}
+    <!-- <a href="{{ url_for('index') }}">Upload another image</a> -->
+<!-- </body> -->
+<!-- </html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            font-size: 18px;
+        }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        img {
+            max-width: 80%;
+            max-height: 500px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: white;
+            padding: 10px;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: white;
+            background-color: #007BFF;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Comparison Result</h1>
+    <p><strong>Label:</strong> {{ label }}</p>
+
+    {% if image_paths %}
+    <div class="image-container">
+        {% for path in image_paths %}
+            <img src="{{ url_for('serve_image', filename=path.replace('artifacts/data/', '')) }}" alt="Closest Image" style="margin: 10px; width: 30%;">
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No closest images found.</p>
+{% endif %}
+
+    
+    {% if image_path %}
+        <!-- <div class="image-container"> -->
+            <!-- <img src="{{ url_for('serve_image', filename=image_path.replace('artifacts/data/', '')) }}" alt="Closest Image"> -->
+
+        <!-- </div> -->
+    {% else %}
+        <!-- <p>No closest image found.</p> -->
+    {% endif %}
+    
+    <a href="{{ url_for('index') }}">Upload another image</a>
+</body>
+</html>
