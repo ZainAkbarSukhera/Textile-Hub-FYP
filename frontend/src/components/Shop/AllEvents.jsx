@@ -40,7 +40,7 @@ const AllEvents = () => {
       minWidth: 180,
       flex: 1,
       renderCell: (params) => (
-        <span className="text-green-600 font-semibold">${params.value || 0}</span>
+        <span className="text-yellow-500 font-semibold"> {params.value || 0}</span>
       ),
     },
     {
@@ -53,7 +53,7 @@ const AllEvents = () => {
     {
       field: "bidders",
       headerName: "Bidders",
-      minWidth: 800, // Increased width for better UI
+      minWidth: 400, // Increased width for better UI
       flex: 2.5,
       renderCell: (params) => (
         <div className="overflow-auto max-h-72 p-5 border border-gray-300 rounded bg-gray-100 w-full">
@@ -61,7 +61,7 @@ const AllEvents = () => {
             params.value.map((bid, index) => (
               <div key={index} className="text-sm text-gray-700 border-b pb-3 mb-3">
                 <strong>User ID:</strong> {bid.userId} <br />
-                <strong>Bid:</strong> ${bid.bidAmount} <br />
+                <strong>Bid:</strong> Rs {bid.bidAmount} <br />
                 <strong>Time:</strong> {new Date(bid.bidTime).toLocaleString()}
               </div>
             ))
@@ -100,10 +100,10 @@ const AllEvents = () => {
   const rows = events?.map((item) => ({
     id: item._id,
     name: item.name,
-    price: `US$ ${item.discountPrice}`,
+    price: `Rs ${item.discountPrice}`,
     Stock: item.stock,
     sold: item.sold_out,
-    currentHighestBid: item.currentHighestBid || "No Bids",
+    currentHighestBid: "Rs"+ item.currentHighestBid || "No Bids",
     createdAt: item.createdAt,
     bidders: item.bids || [],
   })) || [];

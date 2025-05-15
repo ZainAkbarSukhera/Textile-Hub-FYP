@@ -10,7 +10,7 @@
     "dev": "nodemon server.js",
     "start": "node server.js"
   },
-  "author": "shahriar Sajeeb",
+  "author": "Zain Akbar",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.9.0",

@@ -60,6 +60,10 @@ import axios from "axios";
 import { server } from "./server";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import SearchPage from "./pages/SearchPage.jsx";
+
+
+
 
 const App = () => {
   const [stripeApikey, setStripeApiKey] = useState("");
@@ -105,6 +109,7 @@ const App = () => {
           element={<SellerActivationPage />}
         />
         <Route path="/products" element={<ProductsPage />} />
+        <Route path="/search" element={<SearchPage />} />
         <Route path="/product/:id" element={<ProductDetailsPage />} />
         <Route path="/best-selling" element={<BestSellingPage />} />
         <Route path="/events" element={<EventsPage />} />

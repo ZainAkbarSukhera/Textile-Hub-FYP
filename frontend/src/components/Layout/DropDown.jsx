@@ -33,7 +33,7 @@ const DropDown = ({ categoriesData, setDropDown }) => {
           </div>
         ))}
     </div>
-  );
+  ); 
 };
 
 export default DropDown;

@@ -3,10 +3,11 @@ import Footer from "../components/Layout/Footer";
 import Header from "../components/Layout/Header";
 import Lottie from "react-lottie";
 import animationData from "../Assests/animations/107043-success.json";
+import { Link } from "react-router-dom";
 
 const OrderSuccessPage = () => {
   return (
-    <div>
+    <div className="bg-gray-50 min-h-screen flex flex-col">
       <Header />
       <Success />
       <Footer />
@@ -23,14 +24,23 @@ const Success = () => {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
+
   return (
-    <div>
-      <Lottie options={defaultOptions} width={300} height={300} />
-      <h5 className="text-center mb-14 text-[25px] text-[#000000a1]">
-        Your order is successful 😍
-      </h5>
-      <br />
-      <br />
+    <div className="flex flex-col items-center justify-center flex-grow text-center px-4 py-12">
+      <Lottie options={defaultOptions} width={250} height={250} />
+
+      <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 mt-6">
+        Order Placed Successfully!
+      </h2>
+      <p className="text-gray-500 mt-2 text-sm md:text-base">
+        Thank you for your purchase. We hope you enjoy your order!
+      </p>
+
+      <Link to="/" className="mt-6">
+        <button className="px-6 py-3 rounded-md bg-[#004E5d] text-white font-medium hover:bg-[#053a41] transition duration-300">
+          Keep Surfing the Website
+        </button>
+      </Link>
     </div>
   );
 };

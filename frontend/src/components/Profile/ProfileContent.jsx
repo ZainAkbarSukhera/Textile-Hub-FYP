@@ -23,6 +23,8 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { getAllOrdersOfUser } from "../../redux/actions/order";
+import { useNavigate } from "react-router-dom";
+
 
 const ProfileContent = ({ active }) => {
   const { user, error, successMessage } = useSelector((state) => state.user);
@@ -32,6 +34,8 @@ const ProfileContent = ({ active }) => {
   const [password, setPassword] = useState("");
   const [avatar, setAvatar] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     if (error) {
@@ -44,10 +48,14 @@ const ProfileContent = ({ active }) => {
     }
   }, [error, successMessage]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(updateUserInformation(name, email, phoneNumber, password));
-  };
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  await dispatch(updateUserInformation(name, email, phoneNumber, password));
+   toast.success("Profile updated!");
+  navigate("/profile");
+  
+};
+
 
   const handleImage = async (e) => {
     const reader = new FileReader();
@@ -85,7 +93,7 @@ const ProfileContent = ({ active }) => {
             <div className="relative">
               <img
                 src={`${user?.avatar?.url}`}
-                className="w-[150px] h-[150px] rounded-full object-cover border-[3px] border-[#3ad132]"
+                className="w-[150px] h-[150px] rounded-full object-cover border-[3px] border-[#004E5d]"
                 alt=""
               />
               <div className="w-[30px] h-[30px] bg-[#E3E9EE] rounded-full flex items-center justify-center cursor-pointer absolute bottom-[5px] right-[5px]">
@@ -151,12 +159,14 @@ const ProfileContent = ({ active }) => {
                   />
                 </div>
               </div>
+             
               <input
-                className={`w-[250px] h-[40px] border border-[#3a24db] text-center text-[#3a24db] rounded-[3px] mt-8 cursor-pointer`}
+                className={`w-[250px] h-[40px] border bg-[#004E5d] text-center text-white rounded-md mt-8 cursor-pointer`}
                 required
                 value="Update"
                 type="submit"
               />
+           
             </form>
           </div>
         </>
@@ -523,7 +533,7 @@ const ChangePassword = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
             <input
-              className={`w-[95%] h-[40px] border border-[#3a24db] text-center text-[#3a24db] rounded-[3px] mt-8 cursor-pointer`}
+              className={`w-[95%] h-[40px] border bg-[#004E5d] text-center text-white  rounded-md mt-8 cursor-pointer`}
               required
               value="Update"
               type="submit"
@@ -717,7 +727,7 @@ const Address = () => {
                   <div className=" w-full pb-2">
                     <input
                       type="submit"
-                      className={`${styles.input} mt-5 cursor-pointer`}
+                      className={`${styles.input} bg-black text-white mt-5 cursor-pointer`}
                       required
                       readOnly
                     />
@@ -771,7 +781,7 @@ const Address = () => {
 
       {user && user.addresses.length === 0 && (
         <h5 className="text-center pt-8 text-[18px]">
-          You not have any saved address!
+          You do not have any saved address!
         </h5>
       )}
     </div>

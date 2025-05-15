@@ -65,7 +65,7 @@ class Store_img():
         input_embedding = self.model.image_to_embedding(image)
         print(input_embedding)
 
-        results = self.collection.query(query_embeddings=[input_embedding], n_results=3,
+        results = self.collection.query(query_embeddings=[input_embedding], n_results=5,
         include=["metadatas"])
         print("Query Results:", results)
 

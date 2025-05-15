@@ -77,10 +77,10 @@ const ShopSettings = () => {
         <div className="w-full flex items-center justify-center">
           <div className="relative">
             <img
-              src={avatar ? avatar : `${seller.avatar?.url}`}
-              alt=""
-              className="w-[200px] h-[200px] rounded-full cursor-pointer"
-            />
+            src={avatar || seller?.avatar?.url}
+            alt="Shop Avatar"
+            className="w-40 h-40 rounded-full object-cover border-4 border-[#004E5d]"
+          />
             <div className="w-[30px] h-[30px] bg-[#E3E9EE] rounded-full flex items-center justify-center cursor-pointer absolute bottom-[10px] right-[15px]">
               <input
                 type="file"
@@ -176,7 +176,7 @@ const ShopSettings = () => {
             <input
               type="submit"
               value="Update Shop"
-              className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+              className={`w-full bg-[#004E5d] hover:bg-[#033f4f] text-white py-3 rounded-md font-semibold transition`}
               required
               readOnly
             />

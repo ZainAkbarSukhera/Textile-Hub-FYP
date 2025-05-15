@@ -176,24 +176,30 @@ const Payment = () => {
   };
 
   return (
-    <div className="w-full flex flex-col items-center py-8">
-      <div className="w-[90%] 1000px:w-[70%] block 800px:flex">
-        <div className="w-full 800px:w-[65%]">
-          <PaymentInfo
-            user={user}
-            open={open}
-            setOpen={setOpen}
-            onApprove={onApprove}
-            createOrder={createOrder}
-            paymentHandler={paymentHandler}
-            cashOnDeliveryHandler={cashOnDeliveryHandler}
-          />
-        </div>
-        <div className="w-full 800px:w-[35%] 800px:mt-0 mt-8">
-          <CartData orderData={orderData} />
-        </div>
-      </div>
+   <div className="w-full flex flex-col items-center py-8">
+  <div className="w-[90%] 1000px:w-[70%] flex flex-col 800px:flex-row gap-6">
+    
+    {/* Left: Payment Info */}
+    <div className="w-full 800px:w-[65%]  rounded-lg shadow-sm p-4 flex flex-col justify-between">
+      <PaymentInfo
+        user={user}
+        open={open}
+        setOpen={setOpen}
+        onApprove={onApprove}
+        createOrder={createOrder}
+        paymentHandler={paymentHandler}
+        cashOnDeliveryHandler={cashOnDeliveryHandler}
+      />
     </div>
+
+    {/* Right: Cart Data */}
+    <div className="w-full 800px:w-[35%]  rounded-lg shadow-sm p-4 flex flex-col justify-between">
+      <CartData orderData={orderData} />
+    </div>
+
+  </div>
+</div>
+
   );
 };
 
@@ -208,231 +214,164 @@ const PaymentInfo = ({
 }) => {
   const [select, setSelect] = useState(1);
 
-  return (
-    <div className="w-full 800px:w-[95%] bg-[#fff] rounded-md p-5 pb-8">
-      {/* select buttons */}
-      <div>
-        <div className="flex w-full pb-5 border-b mb-2">
-          <div
-            className="w-[25px] h-[25px] rounded-full bg-transparent border-[3px] border-[#1d1a1ab4] relative flex items-center justify-center"
-            onClick={() => setSelect(1)}
-          >
-            {select === 1 ? (
-              <div className="w-[13px] h-[13px] bg-[#1d1a1acb] rounded-full" />
-            ) : null}
-          </div>
-          <h4 className="text-[18px] pl-2 font-[600] text-[#000000b1]">
-            Pay with Debit/credit card
-          </h4>
+ return (
+  <div className="w-full max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6 space-y-8">
+    {/* CARD PAYMENT OPTION */}
+    <div>
+      <div className="flex items-center gap-3 border-b pb-4 cursor-pointer" onClick={() => setSelect(1)}>
+        <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${select === 1 ? 'border-[#004E5d]' : 'border-gray-400'}`}>
+          {select === 1 && <div className="w-3 h-3 bg-[#004E5d] rounded-full" />}
         </div>
-
-        {/* pay with card */}
-        {select === 1 ? (
-          <div className="w-full flex border-b">
-            <form className="w-full" onSubmit={paymentHandler}>
-              <div className="w-full flex pb-3">
-                <div className="w-[50%]">
-                  <label className="block pb-2">Name On Card</label>
-                  <input
-                    required
-                    placeholder={user && user.name}
-                    className={`${styles.input} !w-[95%] text-[#444]`}
-                    value={user && user.name}
-                  />
-                </div>
-                <div className="w-[50%]">
-                  <label className="block pb-2">Exp Date</label>
-                  <CardExpiryElement
-                    className={`${styles.input}`}
-                    options={{
-                      style: {
-                        base: {
-                          fontSize: "19px",
-                          lineHeight: 1.5,
-                          color: "#444",
-                        },
-                        empty: {
-                          color: "#3a120a",
-                          backgroundColor: "transparent",
-                          "::placeholder": {
-                            color: "#444",
-                          },
-                        },
-                      },
-                    }}
-                  />
-                </div>
-              </div>
-
-              <div className="w-full flex pb-3">
-                <div className="w-[50%]">
-                  <label className="block pb-2">Card Number</label>
-                  <CardNumberElement
-                    className={`${styles.input} !h-[35px] !w-[95%]`}
-                    options={{
-                      style: {
-                        base: {
-                          fontSize: "19px",
-                          lineHeight: 1.5,
-                          color: "#444",
-                        },
-                        empty: {
-                          color: "#3a120a",
-                          backgroundColor: "transparent",
-                          "::placeholder": {
-                            color: "#444",
-                          },
-                        },
-                      },
-                    }}
-                  />
-                </div>
-                <div className="w-[50%]">
-                  <label className="block pb-2">CVV</label>
-                  <CardCvcElement
-                    className={`${styles.input} !h-[35px]`}
-                    options={{
-                      style: {
-                        base: {
-                          fontSize: "19px",
-                          lineHeight: 1.5,
-                          color: "#444",
-                        },
-                        empty: {
-                          color: "#3a120a",
-                          backgroundColor: "transparent",
-                          "::placeholder": {
-                            color: "#444",
-                          },
-                        },
-                      },
-                    }}
-                  />
-                </div>
-              </div>
-              <input
-                type="submit"
-                value="Submit"
-                className={`${styles.button} !bg-[#f63b60] text-[#fff] h-[45px] rounded-[5px] cursor-pointer text-[18px] font-[600]`}
-              />
-            </form>
-          </div>
-        ) : null}
+        <h4 className="text-base font-semibold text-gray-800">Pay with Debit/Credit Card</h4>
       </div>
 
-      <br />
-      {/* paypal payment */}
-      <div>
-        <div className="flex w-full pb-5 border-b mb-2">
-          <div
-            className="w-[25px] h-[25px] rounded-full bg-transparent border-[3px] border-[#1d1a1ab4] relative flex items-center justify-center"
-            onClick={() => setSelect(2)}
-          >
-            {select === 2 ? (
-              <div className="w-[13px] h-[13px] bg-[#1d1a1acb] rounded-full" />
-            ) : null}
-          </div>
-          <h4 className="text-[18px] pl-2 font-[600] text-[#000000b1]">
-            Pay with Paypal
-          </h4>
-        </div>
-
-        {/* pay with payement */}
-        {select === 2 ? (
-          <div className="w-full flex border-b">
-            <div
-              className={`${styles.button} !bg-[#f63b60] text-white h-[45px] rounded-[5px] cursor-pointer text-[18px] font-[600]`}
-              onClick={() => setOpen(true)}
-            >
-              Pay Now
+      {select === 1 && (
+        <form className="mt-4 space-y-4" onSubmit={paymentHandler}>
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="w-full md:w-1/2">
+              <label className="block text-sm font-medium mb-1">Name on Card</label>
+              <input
+                required
+                placeholder={user?.name}
+                value={user?.name}
+                className={`${styles.input} w-full text-[#444]`}
+              />
             </div>
-            {open && (
-              <div className="w-full fixed top-0 left-0 bg-[#00000039] h-screen flex items-center justify-center z-[99999]">
-                <div className="w-full 800px:w-[40%] h-screen 800px:h-[80vh] bg-white rounded-[5px] shadow flex flex-col justify-center p-8 relative overflow-y-scroll">
-                  <div className="w-full flex justify-end p-3">
-                    <RxCross1
-                      size={30}
-                      className="cursor-pointer absolute top-3 right-3"
-                      onClick={() => setOpen(false)}
-                    />
-                  </div>
-                    <PayPalScriptProvider
-                      options={{
-                        "client-id":
-                          "Aczac4Ry9_QA1t4c7TKH9UusH3RTe6onyICPoCToHG10kjlNdI-qwobbW9JAHzaRQwFMn2-k660853jn",
-                      }}
-                    >
-                      <PayPalButtons
-                        style={{ layout: "vertical" }}
-                        onApprove={onApprove}
-                        createOrder={createOrder}
-                      />
-                    </PayPalScriptProvider>
-                </div>
-              </div>
-            )}
+            <div className="w-full md:w-1/2">
+              <label className="block text-sm font-medium mb-1">Exp Date</label>
+              <CardExpiryElement className={`${styles.input}`} options={{
+                style: {
+                  base: {
+                    fontSize: "16px",
+                    color: "#444"
+                  },
+                },
+              }} />
+            </div>
           </div>
-        ) : null}
-      </div>
 
-      <br />
-      {/* cash on delivery */}
-      <div>
-        <div className="flex w-full pb-5 border-b mb-2">
-          <div
-            className="w-[25px] h-[25px] rounded-full bg-transparent border-[3px] border-[#1d1a1ab4] relative flex items-center justify-center"
-            onClick={() => setSelect(3)}
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="w-full md:w-1/2">
+              <label className="block text-sm font-medium mb-1">Card Number</label>
+              <CardNumberElement className={`${styles.input} h-[38px]`} options={{
+                style: { base: { fontSize: "16px", color: "#444" } }
+              }} />
+            </div>
+            <div className="w-full md:w-1/2">
+              <label className="block text-sm font-medium mb-1">CVV</label>
+              <CardCvcElement className={`${styles.input} h-[38px]`} options={{
+                style: { base: { fontSize: "16px", color: "#444" } }
+              }} />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full mt-4 bg-[#004E5d] hover:bg-[#00313a] text-white py-2 rounded-md text-sm font-semibold transition"
           >
-            {select === 3 ? (
-              <div className="w-[13px] h-[13px] bg-[#1d1a1acb] rounded-full" />
-            ) : null}
-          </div>
-          <h4 className="text-[18px] pl-2 font-[600] text-[#000000b1]">
-            Cash on Delivery
-          </h4>
-        </div>
-
-        {/* cash on delivery */}
-        {select === 3 ? (
-          <div className="w-full flex">
-            <form className="w-full" onSubmit={cashOnDeliveryHandler}>
-              <input
-                type="submit"
-                value="Confirm"
-                className={`${styles.button} !bg-[#f63b60] text-[#fff] h-[45px] rounded-[5px] cursor-pointer text-[18px] font-[600]`}
-              />
-            </form>
-          </div>
-        ) : null}
-      </div>
+            Pay Now
+          </button>
+        </form>
+      )}
     </div>
-  );
+
+    {/* PAYPAL PAYMENT OPTION */}
+    <div>
+      <div className="flex items-center gap-3 border-b pb-4 cursor-pointer" onClick={() => setSelect(2)}>
+        <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${select === 2 ? 'border-[#004E5d]' : 'border-gray-400'}`}>
+          {select === 2 && <div className="w-3 h-3 bg-[#004E5d] rounded-full" />}
+        </div>
+        <h4 className="text-base font-semibold text-gray-800">Pay with PayPal</h4>
+      </div>
+
+      {select === 2 && (
+        <div className="mt-4">
+          <button
+            onClick={() => setOpen(true)}
+            className="w-full bg-[#004E5d] hover:bg-[#00313a] text-white py-2 rounded-md text-sm font-semibold transition"
+          >
+            Pay Now
+          </button>
+
+          {open && (
+            <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+              <div className="bg-white w-full max-w-lg rounded-lg p-6 relative shadow-lg overflow-y-auto max-h-[90vh]">
+                <RxCross1
+                  size={24}
+                  className="absolute top-4 right-4 cursor-pointer"
+                  onClick={() => setOpen(false)}
+                />
+                <PayPalScriptProvider options={{ "client-id": "YOUR_CLIENT_ID" }}>
+                  <PayPalButtons
+                    style={{ layout: "vertical" }}
+                    onApprove={onApprove}
+                    createOrder={createOrder}
+                  />
+                </PayPalScriptProvider>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+
+    {/* CASH ON DELIVERY OPTION */}
+    <div>
+      <div className="flex items-center gap-3 border-b pb-4 cursor-pointer" onClick={() => setSelect(3)}>
+        <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${select === 3 ? 'border-[#004E5d]' : 'border-gray-400'}`}>
+          {select === 3 && <div className="w-3 h-3 bg-[#004E5d] rounded-full" />}
+        </div>
+        <h4 className="text-base font-semibold text-gray-800">Cash on Delivery</h4>
+      </div>
+
+      {select === 3 && (
+        <form onSubmit={cashOnDeliveryHandler} className="mt-4">
+          <button
+            type="submit"
+            className="w-full bg-[#004E5d] hover:bg-[#00313a] text-white py-2 rounded-md text-sm font-semibold transition"
+          >
+            Confirm
+          </button>
+        </form>
+      )}
+    </div>
+  </div>
+);
+
 };
 
 const CartData = ({ orderData }) => {
   const shipping = orderData?.shipping?.toFixed(2);
-  return (
-    <div className="w-full bg-[#fff] rounded-md p-5 pb-8">
-      <div className="flex justify-between">
-        <h3 className="text-[16px] font-[400] text-[#000000a4]">subtotal:</h3>
-        <h5 className="text-[18px] font-[600]">${orderData?.subTotalPrice}</h5>
-      </div>
-      <br />
-      <div className="flex justify-between">
-        <h3 className="text-[16px] font-[400] text-[#000000a4]">shipping:</h3>
-        <h5 className="text-[18px] font-[600]">${shipping}</h5>
-      </div>
-      <br />
-      <div className="flex justify-between border-b pb-3">
-        <h3 className="text-[16px] font-[400] text-[#000000a4]">Discount:</h3>
-        <h5 className="text-[18px] font-[600]">{orderData?.discountPrice? "$" + orderData.discountPrice : "-"}</h5>
-      </div>
-      <h5 className="text-[18px] font-[600] text-end pt-3">
-        ${orderData?.totalPrice}
-      </h5>
-      <br />
+return (
+  <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6 space-y-4 text-sm sm:text-base">
+    {/* Subtotal */}
+    <div className="flex justify-between items-center">
+      <h3 className="text-gray-600 font-medium">Subtotal:</h3>
+      <h5 className="text-gray-900 font-semibold">Rs {orderData?.subTotalPrice}</h5>
     </div>
-  );
+
+    {/* Shipping */}
+    <div className="flex justify-between items-center">
+      <h3 className="text-gray-600 font-medium">Shipping:</h3>
+      <h5 className="text-gray-900 font-semibold">Rs {shipping}</h5>
+    </div>
+
+    {/* Discount */}
+    <div className="flex justify-between items-center border-b border-gray-200 pb-3">
+      <h3 className="text-gray-600 font-medium">Discount:</h3>
+      <h5 className="text-red-700 font-semibold">
+        {orderData?.discountPrice ? `- Rs ${orderData.discountPrice}` : "-"}
+      </h5>
+    </div>
+
+    {/* Total */}
+    <div className="flex justify-between items-center pt-2">
+      <h3 className="text-gray-800 font-bold text-lg">Total:</h3>
+      <h5 className="text-gray-800 font-bold text-lg">Rs {orderData?.totalPrice}</h5>
+    </div>
+  </div>
+);
+
 };
 
 export default Payment;

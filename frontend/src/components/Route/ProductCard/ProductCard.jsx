@@ -60,86 +60,173 @@ const ProductCard = ({ data,isEvent }) => {
     }
   };
 
+  // return (
+  //   <>
+  //     <div className="w-full h-[370px] bg-white rounded-lg shadow-sm p-3 relative cursor-pointer">
+  //       <div className="flex justify-end"></div>
+  //       <Link to={`${isEvent === true ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}`}>
+  //         <img
+  //           src={`${data.images && data.images[0]?.url}`}
+  //           alt=""
+  //           className="w-full h-[170px] object-contain"
+  //         />
+  //       </Link>
+  //       <Link to={`/shop/preview/${data?.shop._id}`}>
+  //         <h5 className={`${styles.shop_name}`}>{data.shop.name}</h5>
+  //       </Link>
+  //       <Link to={`${isEvent === true ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}`}>
+  //         <h4 className="pb-3 font-[500]">
+  //           {data.name.length > 40 ? data.name.slice(0, 40) + "..." : data.name}
+  //         </h4>
+
+  //         <div className="flex">
+  //         <Ratings rating={data?.ratings} />
+  //         </div>
+
+  //         <div className="py-2 flex items-center justify-between">
+  //           <div className="flex">
+  //             <h5 className={`${styles.productDiscountPrice}`}>
+  //               Rs
+  //               {data.originalPrice === 0
+  //                 ? data.originalPrice
+  //                 : data.discountPrice}
+
+  //             </h5>
+  //             <h4 className={`${styles.price}`}>
+  //               {data.originalPrice ?  "Rs"+data.originalPrice : null}
+  //             </h4>
+  //           </div>
+  //           <span className="font-[400] text-[17px] text-[#68d284]">
+  //             {data?.sold_out} sold
+  //           </span>
+  //         </div>
+  //       </Link>
+
+  //       {/* side options */}
+  //       <div>
+  //         {click ? (
+  //           <AiFillHeart
+  //             size={22}
+  //             className="cursor-pointer absolute right-2 top-5"
+  //             onClick={() => removeFromWishlistHandler(data)}
+  //             color={click ? "red" : "#333"}
+  //             title="Remove from wishlist"
+  //           />
+  //         ) : (
+  //           <AiOutlineHeart
+  //             size={22}
+  //             className="cursor-pointer absolute right-2 top-5"
+  //             onClick={() => addToWishlistHandler(data)}
+  //             color={click ? "red" : "#333"}
+  //             title="Add to wishlist"
+  //           />
+  //         )}
+  //         <AiOutlineEye
+  //           size={22}
+  //           className="cursor-pointer absolute right-2 top-14"
+  //           onClick={() => setOpen(!open)}
+  //           color="#333"
+  //           title="Quick view"
+  //         />
+  //         <AiOutlineShoppingCart
+  //           size={25}
+  //           className="cursor-pointer absolute right-2 top-24"
+  //           onClick={() => addToCartHandler(data._id)}
+  //           color="#444"
+  //           title="Add to cart"
+  //         />
+  //         {open ? <ProductDetailsCard setOpen={setOpen} data={data} /> : null}
+  //       </div>
+  //     </div>
+  //   </>
+  // );
+
   return (
-    <>
-      <div className="w-full h-[370px] bg-white rounded-lg shadow-sm p-3 relative cursor-pointer">
-        <div className="flex justify-end"></div>
-        <Link to={`${isEvent === true ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}`}>
-          <img
-            src={`${data.images && data.images[0]?.url}`}
-            alt=""
-            className="w-full h-[170px] object-contain"
-          />
-        </Link>
-        <Link to={`/shop/preview/${data?.shop._id}`}>
-          <h5 className={`${styles.shop_name}`}>{data.shop.name}</h5>
-        </Link>
-        <Link to={`${isEvent === true ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}`}>
-          <h4 className="pb-3 font-[500]">
-            {data.name.length > 40 ? data.name.slice(0, 40) + "..." : data.name}
-          </h4>
+    <div className="w-full max-w-sm bg-white rounded-lg shadow-md p-4 relative hover:shadow-lg transition duration-300">
+      {/* Image */}
+      <Link to={isEvent ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}>
+        <img
+          src={data.images?.[0]?.url}
+          alt={data.name}
+          className="w-full h-52 object-fill mb-3 rounded-md"
+        />
+      </Link>
+  
+      {/* Shop Name & Icons Row */}
+      <div className="flex items-center justify-between mb-3">
+        
 
-          <div className="flex">
+        <div className="mb-2 mt-2">
           <Ratings rating={data?.ratings} />
-          </div>
-
-          <div className="py-2 flex items-center justify-between">
-            <div className="flex">
-              <h5 className={`${styles.productDiscountPrice}`}>
-                Rs
-                {data.originalPrice === 0
-                  ? data.originalPrice
-                  : data.discountPrice}
-
-              </h5>
-              <h4 className={`${styles.price}`}>
-                {data.originalPrice ?  "Rs"+data.originalPrice : null}
-              </h4>
-            </div>
-            <span className="font-[400] text-[17px] text-[#68d284]">
-              {data?.sold_out} sold
-            </span>
-          </div>
-        </Link>
-
-        {/* side options */}
-        <div>
+        </div>
+  
+        <div className="flex items-center gap-3">
           {click ? (
             <AiFillHeart
-              size={22}
-              className="cursor-pointer absolute right-2 top-5"
+              size={20}
               onClick={() => removeFromWishlistHandler(data)}
-              color={click ? "red" : "#333"}
+              className="text-red-500 hover:scale-110 transition cursor-pointer"
               title="Remove from wishlist"
             />
           ) : (
             <AiOutlineHeart
-              size={22}
-              className="cursor-pointer absolute right-2 top-5"
+              size={20}
               onClick={() => addToWishlistHandler(data)}
-              color={click ? "red" : "#333"}
+              className="text-gray-700 hover:scale-110 transition cursor-pointer"
               title="Add to wishlist"
             />
           )}
           <AiOutlineEye
-            size={22}
-            className="cursor-pointer absolute right-2 top-14"
+            size={20}
             onClick={() => setOpen(!open)}
-            color="#333"
+            className="text-gray-700 hover:scale-110 transition cursor-pointer"
             title="Quick view"
           />
           <AiOutlineShoppingCart
-            size={25}
-            className="cursor-pointer absolute right-2 top-24"
+            size={22}
             onClick={() => addToCartHandler(data._id)}
-            color="#444"
+            className="text-gray-800 hover:scale-110 transition cursor-pointer"
             title="Add to cart"
           />
-          {open ? <ProductDetailsCard setOpen={setOpen} data={data} /> : null}
         </div>
       </div>
-    </>
+  
+      {/* Product Info */}
+      <Link to={isEvent ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}>
+      <Link to={`/shop/preview/${data?.shop._id}`}>
+          <h5 className="text-sm font-medium text-[#004E5d] hover:underline">
+            {data.shop.name}
+          </h5>
+        </Link>
+
+        <h4 className="text-base font-semibold text-gray-800 mb-1 line-clamp-2">
+          {data.name.length > 40 ? data.name.slice(0, 40) + "..." : data.name}
+        </h4>
+  
+       
+  
+        <div className="flex items-center justify-between text-sm">
+          <div className="flex items-center gap-2">
+            <h5 className="text-gray-800 font-bold">
+              Rs {data.originalPrice === 0 ? data.originalPrice : data.discountPrice}
+            </h5>
+            {data.originalPrice && (
+              <h4 className="line-through text-red-700">
+                Rs {data.originalPrice}
+              </h4>
+            )}
+          </div>
+          <span className="text-gray-500">{data?.sold_out} sold</span>
+        </div>
+      </Link>
+  
+      {/* Product Details Modal */}
+      {open && <ProductDetailsCard setOpen={setOpen} data={data} />}
+    </div>
   );
+  
+  
+
 };
 
 export default ProductCard;

@@ -178,132 +178,90 @@ const EventCard = ({ active, data }) => {
     ((data.originalPrice - data.discountPrice) / data.originalPrice) * 100
   );
 
-  return (
-    <div
-      className={`w-full max-w-md bg-gradient-to-br from-gray-50 to-white rounded-2xl overflow-hidden 
-      transition-all duration-500 ease-out ${
-        animationPhase === 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-      } ${isExpanded ? "shadow-2xl scale-105" : "shadow-lg hover:shadow-xl"}`}
-    >
-      {/* Ribbon */}
-      {discountPercentage > 0 && (
-        <div className="absolute -right-12 top-6 bg-red-500 text-white py-1 px-12 transform rotate-45 z-10 shadow-md">
-          {discountPercentage}% OFF
-        </div>
-      )}
-
-      {/* Image Container */}
-      <div 
-        className="relative w-full cursor-pointer" 
-        onClick={toggleExpand}
-      >
-        <div className="absolute inset-0 bg-black/50 mix-blend-multiply z-0"></div>
-        <img
-          src={data.images[0]?.url}
-          alt={data.name}
-          className={`w-full object-cover transition-all duration-700 ${
-            isExpanded ? "h-64 grayscale-0" : "h-56 grayscale-[30%]"
-          }`}
-        />
-        
-        {/* Floating Info Card */}
-        <div className="absolute top-4 left-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-lg">
-          <h2 className="text-xl font-bold text-gray-800 truncate">{data.name}</h2>
-          <div className="flex justify-between items-center mt-1">
-            <div className="flex items-baseline gap-2">
-              <span className="text-gray-400 text-xs line-through">${data.originalPrice}</span>
-              <span className="text-red-500 font-bold text-lg">${data.discountPrice}</span>
-            </div>
-            <div className="bg-green-500 text-white text-xs font-medium px-2 py-1 rounded-full">
-              {data.sold_out} sold
-            </div>
-          </div>
-        </div>
-        
-        {/* Countdown Overlay */}
-        <div className="absolute bottom-0 left-0 right-0 p-3 flex justify-center">
-          <div className="bg-black/80 backdrop-blur-md rounded-lg px-4 py-2 inline-block">
-            <CountDown data={data} />
-          </div>
-        </div>
+return (
+  <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-500 relative">
+    {/* Discount Ribbon */}
+    {discountPercentage > 0 && (
+      <div className="absolute -right-6 top-6 bg-red-600 text-white py-1 px-8 transform rotate-45 z-10 text-xs font-semibold shadow">
+        {discountPercentage}% OFF
       </div>
+    )}
 
-      {/* Content Area with Floating Effect */}
-      <div className={`relative bg-white p-5 transition-all duration-500 ${
-        isExpanded ? "-mt-6" : "-mt-2"
-      } rounded-t-3xl z-20 shadow-lg`}>
-        
-        {/* Pull Handle Indicator */}
-        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-10 h-1 bg-gray-300 rounded-full"></div>
-        
-        {/* Description with Expand/Collapse */}
-        <div className={`overflow-hidden transition-all duration-300 ${
-          isExpanded ? "max-h-40 mt-4" : "max-h-12 mt-2"
-        }`}>
-          <p className="text-gray-600 text-sm">{data.description}</p>
-        </div>
-        
-        {/* Highest Bid Display */}
-        {data.currentHighestBid && (
-          <div className="mt-4 bg-gradient-to-r from-amber-50 to-amber-100 rounded-lg p-3 border-l-4 border-amber-500">
-            <div className="flex justify-between items-center">
-              <span className="text-amber-800 font-medium">Current Highest Bid</span>
-              <span className="text-amber-800 font-bold text-lg">
-                ${data.currentHighestBid}
-              </span>
-            </div>
-          </div>
-        )}
-
-        {/* Bidding Interface */}
-        <div className="mt-4">
-          <div className="relative group">
-            <input
-              type="number"
-              placeholder="Enter your bid amount..."
-              value={bidAmount}
-              onChange={handleBidAmountChange}
-              className="w-full bg-gray-50 border-0 rounded-xl p-4 pr-24 focus:ring-2 focus:ring-red-400 
-              focus:bg-white shadow-inner transition-all duration-300"
-            />
-            <div className="absolute inset-y-0 right-0 flex items-center pr-1.5">
-              <button
-                onClick={placeBidHandler}
-                className="h-10 bg-gradient-to-r from-red-500 to-red-600 text-white px-4 
-                rounded-lg font-medium transform transition-all duration-300 
-                group-hover:scale-105 hover:shadow-md"
-              >
-                Bid Now
-              </button>
-            </div>
-          </div>
-
-          {/* Action Buttons with Creative Styling */}
-          <div className="grid grid-cols-2 gap-3 mt-4">
-            <Link to={`/product/${data._id}?isEvent=true`} className="group">
-              <button className="w-full bg-gray-800 text-gray-200 px-4 py-3 rounded-xl font-medium
-                overflow-hidden relative transition-all duration-300 group-hover:shadow-lg">
-                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-gray-600 to-gray-500 
-                  transform -translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
-                <span className="relative z-10">See Details</span>
-              </button>
-            </Link>
-            <button
-              onClick={addToCartHandler}
-              className="w-full bg-gradient-to-br from-green-500 to-emerald-600 text-white px-4 py-3 
-              rounded-xl font-medium relative overflow-hidden group hover:shadow-lg transition-all duration-300"
-            >
-              <span className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 
-              origin-left transition-transform duration-300 mix-blend-soft-light"></span>
-              <span className="relative flex items-center justify-center gap-2">
-                <span>Add to Cart</span>
-              </span>
-            </button>
-          </div>
+    {/* Image Section */}
+    <div className="relative w-full cursor-pointer" onClick={toggleExpand}>
+      <img
+        src={data.images[0]?.url}
+        alt={data.name}
+        className="w-full h-48 object-cover grayscale-[10%]"
+      />
+      {/* Countdown */}
+      <div className="absolute bottom-4 left-4 right-4 flex justify-center z-10">
+        <div className="bg-white/80 px-4 py-1 rounded-md shadow text-xs font-medium text-gray-800">
+          <CountDown data={data} />
         </div>
       </div>
     </div>
-  );
+
+    {/* Info & Actions */}
+    <div className="p-5 flex flex-col justify-between min-h-[260px]">
+      {/* Product Name */}
+      <h2 className="text-md font-medium text-gray-800 mb-1 truncate">
+        {data.name}
+      </h2>
+
+      {/* Price & Sold */}
+      <div className="flex justify-between items-center mb-2">
+        <div className="flex items-baseline space-x-2">
+          <span className="line-through text-sm text-red-600">Rs {data.originalPrice}</span>
+          <span className="text-base font-bold text-gray-800">Rs {data.discountPrice}</span>
+        </div>
+        <span className="text-sm text-gray-700">{data.sold_out} sold</span>
+      </div>
+
+      {/* Current Highest Bid */}
+      <div className="bg-amber-100 rounded-md px-4 py-2 border-l-4 border-amber-500 mb-3">
+        <div className="flex justify-between items-center text-amber-800 text-sm font-semibold">
+          <span>Current Highest</span>
+          <span>Rs {data.currentHighestBid || 0}</span>
+        </div>
+      </div>
+
+      {/* Bid Input */}
+      <div className="relative mb-4">
+        <input
+          type="number"
+          placeholder="Enter your bid..."
+          value={bidAmount}
+          onChange={handleBidAmountChange}
+          className="w-full border border-gray-300 rounded-lg px-4 py-2 pr-24 focus:outline-none focus:ring-2 focus:ring-red-500"
+        />
+        <button
+          onClick={placeBidHandler}
+          className="absolute top-1 right-1 h-8 px-4 text-sm rounded-md bg-red-500 text-white hover:bg-red-600 transition"
+        >
+          Bid Now
+        </button>
+      </div>
+
+      {/* Action Buttons */}
+      <div className="grid grid-cols-2 gap-3 mt-auto">
+        <Link to={`/product/${data._id}?isEvent=true`}>
+          <button className="w-full text-sm bg-gray-800 text-white py-2 rounded-md hover:bg-gray-700 transition">
+            See Details
+          </button>
+        </Link>
+        <button
+          onClick={addToCartHandler}
+          className="w-full text-sm bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition"
+        >
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  </div>
+);
+
+
 };
 
 export default EventCard;

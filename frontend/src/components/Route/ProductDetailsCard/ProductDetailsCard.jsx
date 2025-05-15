@@ -70,111 +70,121 @@ const ProductDetailsCard = ({ setOpen, data }) => {
   };
 
   return (
-    <div className="bg-[#fff]">
-      {data ? (
-        <div className="fixed w-full h-screen top-0 left-0 bg-[#00000030] z-40 flex items-center justify-center">
-          <div className="w-[90%] 800px:w-[60%] h-[90vh] overflow-y-scroll 800px:h-[75vh] bg-white rounded-md shadow-sm relative p-4">
-            <RxCross1
-              size={30}
-              className="absolute right-3 top-3 z-50"
-              onClick={() => setOpen(false)}
-            />
+  <div className="bg-white">
+    {data && (
+      <div className="fixed inset-0 z-40 bg-black/30 flex items-center justify-center">
+        <div className="w-[95%] sm:w-[90%] lg:w-[70%] xl:w-[60%] max-h-[90vh] overflow-y-auto bg-white rounded-lg shadow-lg p-6 relative">
+          {/* Close Button */}
+          <RxCross1
+            size={24}
+            className="absolute top-4 right-4 cursor-pointer text-gray-600 hover:text-black transition"
+            onClick={() => setOpen(false)}
+          />
 
-            <div className="block w-full 800px:flex">
-              <div className="w-full 800px:w-[50%]">
-                <img src={`${data.images && data.images[0]?.url}`} alt="" />
-                <div className="flex">
-                  <Link to={`/shop/preview/${data.shop._id}`} className="flex">
-                    <img
-                      src={`${data.images && data.images[0]?.url}`}
-                      alt=""
-                      className="w-[50px] h-[50px] rounded-full mr-2"
+          <div className="flex flex-col md:flex-row gap-8">
+            {/* Left: Product Images and Seller */}
+            <div className="w-full md:w-1/2">
+              <img
+                src={data.images[0]?.url}
+                alt={data.name}
+                className="w-full h-auto rounded-md object-contain"
+              />
+
+              {/* Seller Info */}
+              <div className="flex items-center gap-4 mt-4">
+                <Link to={`/shop/preview/${data.shop._id}`} className="flex items-center gap-3">
+                  <img
+                    src={data.shop?.avatar?.url}
+                    alt="Shop"
+                    className="w-12 h-12 rounded-full object-cover border"
+                  />
+                  <div>
+                    <h3 className="font-semibold text-sm">{data.shop.name}</h3>
+                    <p className="text-xs text-gray-600">{data?.ratings || 0.0/5} Ratings</p>
+                  </div>
+                </Link>
+              </div>
+
+              {/* Message Seller */}
+              <button
+                className="mt-4 w-full bg-black text-white py-2 rounded-md text-sm hover:bg-gray-800 transition"
+                onClick={handleMessageSubmit}
+              >
+                Send Message <AiOutlineMessage className="inline ml-1" />
+              </button>
+
+              <p className="text-sm text-gray-600 mt-3 font-medium">({data?.sold_out || 0}) Sold</p>
+            </div>
+
+            {/* Right: Product Info */}
+            <div className="w-full md:w-1/2">
+              <h2 className="text-xl font-bold text-gray-800">{data.name}</h2>
+              <p className="text-gray-600 text-sm mt-2">{data.description}</p>
+
+              {/* Price */}
+              <div className="flex items-baseline gap-3 mt-4">
+                <span className="text-xl font-semibold text-gray-800">Rs {data.discountPrice}</span>
+                {data.originalPrice && (
+                  <span className="line-through text-sm text-red-700">
+                    Rs {data.originalPrice}
+                  </span>
+                )}
+              </div>
+
+              {/* Quantity and Wishlist */}
+              <div className="flex justify-between items-center mt-8">
+                <div className="flex items-center">
+                  <button
+                    className="bg-[#004E5d] text-white px-3 py-1 rounded-l hover:opacity-80 transition"
+                    onClick={decrementCount}
+                  >
+                    -
+                  </button>
+                  <span className="px-4 py-1 bg-gray-100 text-gray-800 font-medium">
+                    {count}
+                  </span>
+                  <button
+                    className="bg-[#004E5d] text-white px-3 py-1 rounded-r hover:opacity-80 transition"
+                    onClick={incrementCount}
+                  >
+                    +
+                  </button>
+                </div>
+
+                <div>
+                  {click ? (
+                    <AiFillHeart
+                      size={28}
+                      className="text-red-500 cursor-pointer"
+                      onClick={() => removeFromWishlistHandler(data)}
+                      title="Remove from wishlist"
                     />
-                    <div>
-                      <h3 className={`${styles.shop_name}`}>
-                        {data.shop.name}
-                      </h3>
-                      <h5 className="pb-3 text-[15px]">{data?.ratings} Ratings</h5>
-                    </div>
-                  </Link>
-                </div>
-                <div
-                  className={`${styles.button} bg-[#000] mt-4 rounded-[4px] h-11`}
-                  onClick={handleMessageSubmit}
-                >
-                  <span className="text-[#fff] flex items-center">
-                    Send Message <AiOutlineMessage className="ml-1" />
-                  </span>
-                </div>
-                <h5 className="text-[16px] text-[red] mt-5">(50) Sold out</h5>
-              </div>
-
-              <div className="w-full 800px:w-[50%] pt-5 pl-[5px] pr-[5px]">
-                <h1 className={`${styles.productTitle} text-[20px]`}>
-                  {data.name}
-                </h1>
-                <p>{data.description}</p>
-
-                <div className="flex pt-3">
-                  <h4 className={`${styles.productDiscountPrice}`}>
-                    {data.discountPrice}$
-                  </h4>
-                  <h3 className={`${styles.price}`}>
-                    {data.originalPrice ? data.originalPrice + "$" : null}
-                  </h3>
-                </div>
-                <div className="flex items-center mt-12 justify-between pr-3">
-                  <div>
-                    <button
-                      className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold rounded-l px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
-                      onClick={decrementCount}
-                    >
-                      -
-                    </button>
-                    <span className="bg-gray-200 text-gray-800 font-medium px-4 py-[11px]">
-                      {count}
-                    </span>
-                    <button
-                      className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold rounded-l px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
-                      onClick={incrementCount}
-                    >
-                      +
-                    </button>
-                  </div>
-                  <div>
-                    {click ? (
-                      <AiFillHeart
-                        size={30}
-                        className="cursor-pointer"
-                        onClick={() => removeFromWishlistHandler(data)}
-                        color={click ? "red" : "#333"}
-                        title="Remove from wishlist"
-                      />
-                    ) : (
-                      <AiOutlineHeart
-                        size={30}
-                        className="cursor-pointer"
-                        onClick={() => addToWishlistHandler(data)}
-                        title="Add to wishlist"
-                      />
-                    )}
-                  </div>
-                </div>
-                <div
-                  className={`${styles.button} mt-6 rounded-[4px] h-11 flex items-center`}
-                  onClick={() => addToCartHandler(data._id)}
-                >
-                  <span className="text-[#fff] flex items-center">
-                    Add to cart <AiOutlineShoppingCart className="ml-1" />
-                  </span>
+                  ) : (
+                    <AiOutlineHeart
+                      size={28}
+                      className="text-gray-600 cursor-pointer hover:text-black"
+                      onClick={() => addToWishlistHandler(data)}
+                      title="Add to wishlist"
+                    />
+                  )}
                 </div>
               </div>
+
+              {/* Add to Cart */}
+              <button
+                className="mt-6 w-full bg-[#004E5d] text-white py-2 rounded-md text-sm flex items-center justify-center gap-2 hover:bg-[#003845] transition"
+                onClick={() => addToCartHandler(data._id)}
+              >
+                Add to cart <AiOutlineShoppingCart size={18} />
+              </button>
             </div>
           </div>
         </div>
-      ) : null}
-    </div>
-  );
+      </div>
+    )}
+  </div>
+);
+
 };
 
 export default ProductDetailsCard;
