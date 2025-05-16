@@ -30,7 +30,7 @@ export const createProduct =
         discountPrice,
         stock,
         shopId,
-        images,
+        images
       );
       dispatch({
         type: "productCreateSuccess",
@@ -73,8 +73,11 @@ export const deleteProduct = (id) => async (dispatch) => {
       type: "deleteProductRequest",
     });
 
+    console.log(`${server}`);
+    console.log(`${id}`);
+
     const { data } = await axios.delete(
-      `${server}/product/delete-shop-product/${id}`,
+      `http://localhost:8000/api/v2/product/delete-shop-product/${id}`,
       {
         withCredentials: true,
       }

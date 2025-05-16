@@ -95,8 +95,6 @@ const handleImageSearch = async (e) => {
 
     if (data.results && data.results.length > 0) {
       navigate("/search", { state: { results: data.results } });
-      // const ids = data.results.map(i => i._id).join(",");
-      // navigate(`/search?ids=${ids}`);
     } else {
       navigate("/search", { state: { results: [] } });
     }
@@ -121,18 +119,6 @@ const handleImageSearch = async (e) => {
     setSearchData(filteredProducts);
   };
 
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     if (window.scrollY > 70) {
-  //       setActive(true);
-  //     } else {
-  //       setActive(false);
-  //     }
-  //   };
-  
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => window.removeEventListener("scroll", handleScroll); // Cleanup
-  // }, []);
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {

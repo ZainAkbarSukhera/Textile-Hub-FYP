@@ -47,7 +47,3 @@ router.post('/bidding/:id/bid', async (req, res) => {
 
 // Export the router
 module.exports = router;
-
-
-
-// Create a Bidding Event

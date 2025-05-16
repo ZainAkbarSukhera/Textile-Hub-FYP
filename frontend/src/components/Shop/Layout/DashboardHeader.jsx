@@ -27,11 +27,6 @@ return (
       </Link>
     </div>
 
-    {/* Go to Website Button */}
-    {/* <div className={`${styles.button}`}>
-      
-    </div> */}
-
     {/* Dashboard Icons and Seller Avatar */}
     <div className="flex items-center">
       <Link to="/">

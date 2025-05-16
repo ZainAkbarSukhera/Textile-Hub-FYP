@@ -91,8 +91,12 @@ router.delete(
   isSeller,
   catchAsyncErrors(async (req, res, next) => {
     try {
+      console.log("Inside backend delete request");
       const productId = req.params.id;
       const product = await Product.findById(productId);
+
+      console.log("Product id", productId);
+      console.log("product", product);
 
       if (!product) {
         return next(new ErrorHandler("Product is not found with this id", 404));
@@ -117,10 +121,6 @@ router.delete(
           "Error deleting embedding from ChromaDB:",
           error.response ? error.response.data : error.message
         );
-        // Optionally, decide how to handle this error. You might want to:
-        // - Log the error and still consider the product deletion successful.
-        // - Return an error to the client indicating a problem with embedding deletion.
-        // For now, we'll log the error.
       }
 
       res.status(200).json({

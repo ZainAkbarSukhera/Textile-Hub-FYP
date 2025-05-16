@@ -19,10 +19,10 @@ const AllProducts = () => {
   }, [dispatch]);
 
   const handleDelete = (id) => {
+    console.log("Deleting the Product",id);
     dispatch(deleteProduct(id));
     window.location.reload();
   };
-
   const columns = [
     { field: "id", headerName: "Product Id", minWidth: 150, flex: 0.7 },
     {

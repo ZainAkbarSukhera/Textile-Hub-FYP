@@ -4,10 +4,10 @@ export const navItems = [
       title: "Home",
       url: "/",
     },
-    {
-      title: "Best Selling",
-      url: "/best-selling",
-    },
+    // {
+    //   title: "Best Selling",
+    //   url: "/best-selling",
+    // },
     {
       title: "Products",
       url: "/products",
